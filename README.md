@@ -16,23 +16,23 @@
 
 ### Homepage — Product Listing
 <!-- SCREENSHOT: Full homepage showing product grid with filtering -->
-![Homepage](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/main/screenshots/homepage.png)
+![Homepage](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/master/screenshots/homepage.png)
 
 ### Product Page
 <!-- SCREENSHOT: Single product page with image, price, quantity selector, Add to Cart button -->
-![Product Page](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/main/screenshots/productpage.png)
+![Product Page](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/master/screenshots/productpage.png)
 
 ### Shopping Cart
 <!-- SCREENSHOT: Cart page showing items, quantity controls +/-, item totals, order summary -->
-![Cart](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/main/screenshots/shoppingcartpage.png)
+![Cart](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/master/screenshots/shoppingcartpage.png)
 
 ### PayFast Payment
 <!-- SCREENSHOT: PayFast sandbox payment page after being redirected from checkout -->
-![Payment](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/main/screenshots/paymentpage.png)
+![Payment](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/master/screenshots/paymentpage.png)
 
 ### Order Confirmation
 <!-- SCREENSHOT: Payment success page or order status showing PAID -->
-![Order Confirmation](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/main/screenshots/orderconfirmation.png)
+![Order Confirmation](https://raw.githubusercontent.com/Nyaungwa/JamesBeds-Full-Stack-eCommerce-App/master/screenshots/orderconfirmation.png)
 
 ---
 
