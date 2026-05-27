@@ -15,19 +15,6 @@ import java.util.Map;
  * paymentUrl:  where to submit the form (PayFast's endpoint)
  * params:      all the form fields PayFast requires
  *
- * Example frontend usage:
- *   const form = document.createElement('form');
- *   form.method = 'POST';
- *   form.action = response.paymentUrl;
- *   Object.entries(response.params).forEach(([key, value]) => {
- *     const input = document.createElement('input');
- *     input.type = 'hidden';
- *     input.name = key;
- *     input.value = value;
- *     form.appendChild(input);
- *   });
- *   document.body.appendChild(form);
- *   form.submit();
  */
 @Data
 @Builder

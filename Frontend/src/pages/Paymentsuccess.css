@@ -1,6 +1,6 @@
 .top-panel {
-  background: #1e1e1e;
-  color: white;
+  background: var(--jc-ink-2);
+  color: var(--jc-bg);
   padding: 16px;
   text-align: center;
 }
@@ -18,7 +18,7 @@
 }
 
 .status-icon.success {
-  color: #28a745;
+  color: var(--jc-green-800);
 }
 
 .status-title {
@@ -26,7 +26,7 @@
 }
 
 .status-title.success {
-  color: #28a745;
+  color: var(--jc-green-800);
 }
 
 .status-subtitle {
@@ -36,7 +36,7 @@
 }
 
 .receipt-box {
-  background: #eee;
+  background: var(--jc-line-2);
   padding: 20px;
   width: 320px;
   border-radius: 6px;
@@ -51,15 +51,15 @@
 
 .receipt-box hr {
   border: none;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--jc-line-3);
   margin: 12px 0;
 }
 
 .ok-btn {
   padding: 10px 40px;
-  background: #28a745;
+  background: var(--jc-green-800);
   border: none;
-  color: white;
+  color: var(--jc-bg);
   font-size: 16px;
   border-radius: 4px;
   cursor: pointer;

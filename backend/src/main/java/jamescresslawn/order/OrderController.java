@@ -26,30 +26,6 @@ public class OrderController {
      * Creates a new order from the user's current cart.
      * Requires: JWT token in Authorization header.
      *
-     * Request body (optional):
-     * {
-     *   "shippingAddress": "123 Main St, Pretoria, 0001"
-     * }
-     *
-     * Response:
-     * {
-     *   "orderId": "uuid",
-     *   "status": "PENDING",
-     *   "totalAmount": 21499.00,
-     *   "shippingAddress": "123 Main St...",
-     *   "createdAt": "2024-01-15T10:30:00",
-     *   "itemCount": 1,
-     *   "items": [
-     *     {
-     *       "id": "uuid",
-     *       "productName": "Regal Sleigh Bed - Queen",
-     *       "unitPrice": 21499.00,
-     *       "quantity": 1,
-     *       "itemTotal": 21499.00
-     *     }
-     *   ],
-     *   "message": "Order placed successfully"
-     * }
      */
     @PostMapping
     public ResponseEntity<?> createOrder(

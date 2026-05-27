@@ -42,7 +42,6 @@ public class Product {
     @Column(name = "comfort_level")
     private ComfortLevel comfortLevel;
 
-    // BigDecimal is required for monetary values — floating-point types introduce rounding errors.
     @Column(nullable = false, precision = 10, scale = 2)
     @NotNull
     @Positive

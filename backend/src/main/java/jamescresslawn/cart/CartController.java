@@ -23,23 +23,6 @@ public class CartController {
     /**
      * GET /api/cart
      * Returns all cart items for the logged-in user.
-     *
-     * Response shape:
-     * {
-     *   "items": [
-     *     {
-     *       "id": "cart-item-uuid",
-     *       "productId": "product-uuid",
-     *       "productName": "Regal Sleigh Bed",
-     *       "productImageUrl": "https://...",
-     *       "unitPrice": 21499.00,
-     *       "quantity": 2,
-     *       "itemTotal": 42998.00
-     *     }
-     *   ],
-     *   "total": 42998.00,
-     *   "itemCount": 2
-     * }
      */
     @GetMapping
     public ResponseEntity<?> getCart() {
@@ -54,8 +37,6 @@ public class CartController {
     /**
      * POST /api/cart
      * Add a product to the cart.
-     *
-     * Request body: { "productId": "uuid", "quantity": 1 }
      */
     @PostMapping
     public ResponseEntity<?> addToCart(@Valid @RequestBody AddToCartRequest request) {
@@ -71,8 +52,6 @@ public class CartController {
     /**
      * PUT /api/cart/{id}
      * Update the quantity of a cart item.
-     *
-     * Request body: { "quantity": 3 }
      */
     @PutMapping("/{id}")
     public ResponseEntity<?> updateQuantity(

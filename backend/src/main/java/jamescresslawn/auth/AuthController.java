@@ -20,26 +20,6 @@ public class AuthController {
 
     private final AuthService authService;
 
-    /**
-     * POST /api/auth/register
-     *
-     * Request body:
-     * {
-     *   "fullName": "Edwin Nyaungwa",
-     *   "email": "edwin@example.com",
-     *   "password": "securepassword",
-     *   "phoneNumber": "0712345678"   (optional)
-     * }
-     *
-     * Response:
-     * {
-     *   "token": "eyJhbGciOiJIUzI1NiJ9...",
-     *   "email": "edwin@example.com",
-     *   "fullName": "Edwin Nyaungwa",
-     *   "role": "USER",
-     *   "message": "Registration successful"
-     * }
-     */
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         try {
@@ -50,24 +30,6 @@ public class AuthController {
         }
     }
 
-    /**
-     * POST /api/auth/login
-     *
-     * Request body:
-     * {
-     *   "email": "edwin@example.com",
-     *   "password": "securepassword"
-     * }
-     *
-     * Response:
-     * {
-     *   "token": "eyJhbGciOiJIUzI1NiJ9...",
-     *   "email": "edwin@example.com",
-     *   "fullName": "Edwin Nyaungwa",
-     *   "role": "USER",
-     *   "message": "Login successful"
-     * }
-     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthRequest request) {
         try {
@@ -78,7 +40,6 @@ public class AuthController {
                     .body(Map.of("error", "Invalid email or password"));
         }
     }
-
     /**
      * GET /api/auth/me
      * Returns the currently authenticated user's info.

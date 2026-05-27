@@ -10,7 +10,7 @@ html, body {
 
 .payment-container {
     min-height: 100vh;
-    background: #fff;
+    background: var(--jc-bg);
     display: flex;
     flex-direction: column;
     width: 100vw;
@@ -19,7 +19,7 @@ html, body {
 /* ===== BRAND HEADER ===== */
 
 .payment-top-panel {
-    background: #0b1b01;
+    background: var(--jc-ink-deep);
     padding: 18px 40px;
     display: flex;
     justify-content: center;
@@ -36,9 +36,9 @@ html, body {
 
 .brand-main {
     font-size: 2rem;
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: var(--jc-font-display);
     font-weight: 700;
-    color: white;
+    color: var(--jc-bg);
     letter-spacing: -0.5px;
     line-height: 1;
 }
@@ -63,7 +63,7 @@ html, body {
 
 .payment-left {
     width: 55%;
-    background: #c5f6a6;
+    background: var(--jc-green-100);
     display: flex;
     justify-content: center;
     padding: 56px 40px 80px;
@@ -83,7 +83,7 @@ html, body {
     font-weight: 700;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: #1a3a0a;
+    color: var(--jc-green-ink);
     margin-top: 24px;
     padding-bottom: 8px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -104,7 +104,7 @@ html, body {
     background: rgba(255, 255, 255, 0.78);
     outline: none;
     font-size: 0.9rem;
-    color: #111;
+    color: var(--jc-ink-soft);
     transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
     -webkit-appearance: none;
     appearance: none;
@@ -112,13 +112,13 @@ html, body {
 
 .payment-left input:focus,
 .payment-left select:focus {
-    border-color: #3a8a1a;
-    background: #fff;
+    border-color: var(--jc-green-600);
+    background: var(--jc-bg);
     box-shadow: 0 0 0 3px rgba(58, 138, 26, 0.14);
 }
 
 .payment-left input::placeholder {
-    color: #999;
+    color: var(--jc-text-disabled);
     font-size: 0.88rem;
 }
 
@@ -141,8 +141,8 @@ html, body {
     padding: 14px 52px;
     border-radius: 40px;
     border: none;
-    background: #0b1b01;
-    color: #fff;
+    background: var(--jc-ink-deep);
+    color: var(--jc-bg);
     font-size: 0.95rem;
     font-weight: 600;
     letter-spacing: 0.4px;
@@ -165,8 +165,8 @@ html, body {
 
 .payment-right {
     flex: 1;
-    background: #f7f7f5;
-    border-left: 1px solid #e2e2de;
+    background: var(--jc-bg-stone);
+    border-left: 1px solid var(--jc-line);
     padding: 56px 52px 80px;
 }
 
@@ -175,7 +175,7 @@ html, body {
     font-weight: 700;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: #888;
+    color: var(--jc-text-faint);
     margin-bottom: 20px;
 }
 
@@ -186,7 +186,7 @@ html, body {
     align-items: center;
     gap: 14px;
     padding: 14px 0;
-    border-bottom: 1px solid #e0e0da;
+    border-bottom: 1px solid var(--jc-line);
 }
 
 .summary-item img {
@@ -195,7 +195,7 @@ html, body {
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    background: #fff;
+    background: var(--jc-bg);
     flex-shrink: 0;
 }
 
@@ -207,7 +207,7 @@ html, body {
 .product-name {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #111;
+    color: var(--jc-ink-soft);
     margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
@@ -216,13 +216,13 @@ html, body {
 
 .delivery-text {
     font-size: 0.78rem;
-    color: #888;
+    color: var(--jc-text-faint);
 }
 
 .product-price {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #111;
+    color: var(--jc-ink-soft);
     white-space: nowrap;
     margin-left: 8px;
 }
@@ -239,21 +239,21 @@ html, body {
     align-items: center;
     padding: 10px 0;
     font-size: 0.88rem;
-    color: #555;
-    border-bottom: 1px solid #e8e8e4;
+    color: var(--jc-text-3);
+    border-bottom: 1px solid var(--jc-line);
 }
 
 .totals > div:last-child {
     border-bottom: none;
-    border-top: 2px solid #111;
+    border-top: 2px solid var(--jc-ink-soft);
     margin-top: 4px;
     padding-top: 14px;
     font-size: 1rem;
-    color: #111;
+    color: var(--jc-ink-soft);
 }
 
 .totals > div:last-child strong {
-    color: #111;
+    color: var(--jc-ink-soft);
     font-size: 1.1rem;
     font-weight: 700;
 }

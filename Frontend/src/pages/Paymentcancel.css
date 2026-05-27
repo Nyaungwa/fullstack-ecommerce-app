@@ -1,6 +1,6 @@
 
 .top-panel {
-  background: black;
+  background: var(--jc-ink);
   padding: 16px;
   text-align: center;
 }
@@ -18,11 +18,11 @@
 }
 
 .status-icon.cancel {
-  color: #dc3545;
+  color: var(--jc-danger);
 }
 
 .status-title.cancel {
-  color: #dc3545;
+  color: var(--jc-danger);
   margin-bottom: 15px;
 }
 
@@ -33,9 +33,9 @@
 
 .ok-btn {
   padding: 10px 40px;
-  background: #dc3545;
+  background: var(--jc-danger);
   border: none;
-  color: white;
+  color: var(--jc-bg);
   font-size: 16px;
   border-radius: 4px;
   cursor: pointer;

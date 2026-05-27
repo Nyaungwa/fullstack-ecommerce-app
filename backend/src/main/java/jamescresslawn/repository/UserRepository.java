@@ -8,11 +8,7 @@ import java.util.Optional;
 
 @Repository  // Marks this as a Spring-managed repository bean
 public interface UserRepository extends JpaRepository<User, String> {
-    // JpaRepository<User, String> means:
-    //   - This repository works with the User entity
-    //   - The primary key type is String (UUID)
 
-    // Spring reads this method name and auto-generates:
     // SELECT * FROM users WHERE email = ?
     Optional<User> findByEmail(String email);
 

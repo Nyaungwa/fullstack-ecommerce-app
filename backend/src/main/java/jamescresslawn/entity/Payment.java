@@ -19,7 +19,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    // One payment belongs to one order (one-to-one from this side)
+    // One payment belongs to one order 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false, unique = true)
     private Order order;
@@ -30,7 +30,6 @@ public class Payment {
     private PaymentProvider provider;
 
     // The payment ID from PayFast/Stripe (their reference number)
-    // You'll need this if there's ever a dispute or refund
     @Column(name = "provider_reference")
     private String providerReference;
 
@@ -43,7 +42,7 @@ public class Payment {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
-    // When null = not yet paid. Set this when the webhook confirms payment.
+    
     @Column(name = "paid_at")
     private LocalDateTime paidAt;
 

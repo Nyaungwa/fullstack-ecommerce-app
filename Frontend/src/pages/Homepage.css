@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Manrope:wght@400;500&display=swap');
-
+/* fonts imported once via src/styles/tokens.css */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,8 +7,8 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #fff;
+    font-family: var(--jc-font-body);
+    background-color: var(--jc-bg);
     width: 100%;
 }
 
@@ -30,7 +29,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: black;
+    background: var(--jc-ink);
     padding: 15px 25px;
 }
 
@@ -45,17 +44,17 @@ body {
 }
 
 .brand-main {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--jc-font-display);
     font-size: 2.4rem;
     font-weight: 700;
-    color: rgb(236, 225, 225);
+    color: var(--jc-text-on-dark);
     width: auto;
 }
 
 .brand-sub {
     font-size: 0.9rem;
-    color: rgb(236, 225, 225);
-    font-family: 'Manrope', serif;
+    color: var(--jc-text-on-dark);
+    font-family: var(--jc-font-body);
 }
 
 /* =========================
@@ -87,7 +86,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #ccc;
+    color: var(--jc-line-3);
 }
 
 .search-results-box {
@@ -95,8 +94,8 @@ body {
     top: 100%;
     left: 0;
     width: 100%;
-    background: white;
-    border: 1px solid #ddd;
+    background: var(--jc-bg);
+    border: 1px solid var(--jc-line-3);
     border-radius: 6px;
     margin-top: 6px;
     z-index: 100;
@@ -109,7 +108,7 @@ body {
     align-items: center;
     gap: 10px;
     padding: 8px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--jc-line-2);
     cursor: pointer;
 }
 
@@ -134,12 +133,12 @@ body {
     margin: 0;
     font-weight: bold;
     font-size: 14px;
-    color: black;
+    color: var(--jc-ink);
 }
 
 .search-result-info span {
     font-size: 13px;
-    color: black;
+    color: var(--jc-ink);
 }
 
 .mobile-icon {
@@ -158,7 +157,7 @@ body {
     line-height: 1;
     display: flex;
     align-items: center;
-    color: #ccc;
+    color: var(--jc-line-3);
 }
 
 .icon-selection {
@@ -173,7 +172,7 @@ body {
 }
 
 .icon-text {
-    color: white;
+    color: var(--jc-bg);
     font-size: 0.9rem;
 }
 
@@ -185,8 +184,8 @@ body {
     position: absolute;
     top: -8px;
     right: -10px;
-    background: red;
-    color: white;
+    background: var(--jc-danger);
+    color: var(--jc-bg);
     font-size: 0.75rem;
     padding: 2px 6px;
     border-radius: 50%;
@@ -210,20 +209,20 @@ FILTER SECTION
 }
 
 .filter-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--jc-font-display);
     font-size: 2.2rem;
-    color: white;
+    color: var(--jc-bg);
 }
 
 .filter-subtitle {
     font-size: 1rem;
-    color: white;
+    color: var(--jc-bg);
     margin-bottom: 30px;
 }
 
 .filter-box {
     max-width: 480px;
-    background: white;
+    background: var(--jc-bg);
     border-radius: 12px;
     padding: 25px;
     display: flex;
@@ -245,12 +244,12 @@ FILTER SECTION
     flex: 1;
     height: 44px;
     border-radius: 25px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--jc-line-3);
     padding: 0 15px;
 }
 
 .filter-button {
-    background-color: #c5f6a6;
+    background-color: var(--jc-green-100);
     border: none;
     font-weight: 600;
     cursor: pointer;
@@ -260,7 +259,7 @@ FILTER SECTION
    PRODUCTS
 ========================= */
 .beds-section-name {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--jc-font-display);
     font-size: 2rem;
     margin: 40px 0 20px 0;
     padding: 0 25px;
@@ -282,9 +281,9 @@ FILTER SECTION
 .beds-card {
     width: 100%;
     max-width: 300px;
-    background: white;
+    background: var(--jc-bg);
     border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    box-shadow: var(--jc-shadow-card);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -311,7 +310,7 @@ FILTER SECTION
     padding: 10px 20px;
     border-radius: 25px;
     border: none;
-    background-color: #c5f6a6;
+    background-color: var(--jc-green-100);
     cursor: pointer;
 }
 
@@ -324,13 +323,13 @@ FILTER SECTION
 }
 
 .old-price {
-  color: #d32f2f;
+  color: var(--jc-danger);
   text-decoration: line-through;
   font-weight: 500;
 }
 
 .new-price {
-  color: #2e7d32;
+  color: var(--jc-green-700);
   font-weight: 700;
   font-size: 1.1rem;
 }
@@ -339,8 +338,8 @@ FILTER SECTION
   position: absolute;
   top: 12px;
   left: 12px;
-  background: #d32f2f;
-  color: white;
+  background: var(--jc-danger);
+  color: var(--jc-bg);
   padding: 6px 10px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -352,8 +351,8 @@ FILTER SECTION
 }
 
 .premium-footer {
-  background: #000;
-  color: #fff;
+  background: var(--jc-ink);
+  color: var(--jc-bg);
   padding: 50px 80px 20px;
   margin-top: 60px;
 }
@@ -366,19 +365,19 @@ FILTER SECTION
 
 .footer-column h4 {
   margin-bottom: 12px;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--jc-font-display);
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--jc-bg);
   letter-spacing: 0.02em;
 }
 
 .footer-bottom {
   text-align: center;
   margin-top: 30px;
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--jc-font-body);
   font-size: 0.80rem;
-  color: #888888;
+  color: var(--jc-text-faint);
   letter-spacing: 0.01em;
 }
 
@@ -386,8 +385,8 @@ FILTER SECTION
    FOOTER SECTION
 ================= */
 .footer {
-    background-color: #111;
-    color: white;
+    background-color: var(--jc-ink-soft);
+    color: var(--jc-bg);
     padding: 50px 40px;
 }
 
@@ -399,10 +398,10 @@ FILTER SECTION
 }
 
 .footer-column p {
-    font-family: 'Manrope', sans-serif;
+    font-family: var(--jc-font-body);
     font-size: 0.88rem;
     line-height: 1.75;
-    color: #c8c8c8;
+    color: var(--jc-text-on-dark-2);
     font-weight: 400;
 }
 
@@ -432,13 +431,13 @@ FILTER SECTION
 }
 
 .auth-modal {
-    background: white;
+    background: var(--jc-bg);
     border-radius: 16px;
     padding: 40px 36px;
     width: 100%;
     max-width: 400px;
     position: relative;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    box-shadow: var(--jc-shadow-modal);
 }
 
 .auth-close {
@@ -449,11 +448,11 @@ FILTER SECTION
     border: none;
     font-size: 1.1rem;
     cursor: pointer;
-    color: #666;
+    color: var(--jc-text-mute);
 }
 
 .auth-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--jc-font-display);
     font-size: 1.8rem;
     margin-bottom: 24px;
     text-align: center;
@@ -467,7 +466,7 @@ FILTER SECTION
 
 .auth-form input {
     height: 46px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--jc-line-3);
     border-radius: 25px;
     padding: 0 18px;
     font-size: 0.95rem;
@@ -475,15 +474,15 @@ FILTER SECTION
 }
 
 .auth-form input:focus {
-    border-color: #000;
+    border-color: var(--jc-ink);
 }
 
 .auth-submit {
     height: 46px;
     border-radius: 25px;
     border: none;
-    background: #000;
-    color: white;
+    background: var(--jc-ink);
+    color: var(--jc-bg);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -491,11 +490,11 @@ FILTER SECTION
 }
 
 .auth-submit:hover {
-    background: #333;
+    background: var(--jc-text-2);
 }
 
 .auth-error {
-    color: #d32f2f;
+    color: var(--jc-danger);
     font-size: 0.85rem;
     text-align: center;
 }
@@ -504,11 +503,11 @@ FILTER SECTION
     text-align: center;
     margin-top: 18px;
     font-size: 0.9rem;
-    color: #555;
+    color: var(--jc-text-3);
 }
 
 .auth-switch span {
-    color: #000;
+    color: var(--jc-ink);
     font-weight: 600;
     cursor: pointer;
     text-decoration: underline;
@@ -525,7 +524,7 @@ FILTER SECTION
     .mobile-search-box {
         width: 100%;
         padding: 10px 15px;
-        background-color: black;
+        background-color: var(--jc-ink);
         display: flex;
         justify-content: center;
         position: relative;
@@ -545,7 +544,7 @@ FILTER SECTION
         line-height: 1;
         display: flex;
         align-items: center;
-        color: #ccc;
+        color: var(--jc-line-3);
         stroke-width: 1.0;
     }
 
@@ -555,7 +554,7 @@ FILTER SECTION
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
-        color: #ccc;
+        color: var(--jc-line-3);
     }
 
     .mobile-search-results-box {
@@ -564,8 +563,8 @@ FILTER SECTION
         left: 50%;
         transform: translateX(-50%);
         width: 80%;
-        background: white;
-        border: 1px solid #ddd;
+        background: var(--jc-bg);
+        border: 1px solid var(--jc-line-3);
         border-radius: 6px;
         margin-top: 6px;
         z-index: 9999;
@@ -579,7 +578,7 @@ FILTER SECTION
         align-items: center;
         gap: 10px;
         padding: 8px;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--jc-line-2);
         cursor: pointer;
     }
 
@@ -604,12 +603,12 @@ FILTER SECTION
         margin: 0;
         font-weight: bold;
         font-size: 14px;
-        color: black;
+        color: var(--jc-ink);
     }
 
     .mobile-search-result-info span {
         font-size: 13px;
-        color: black;
+        color: var(--jc-ink);
     }
 
 
@@ -653,20 +652,20 @@ FILTER SECTION
     }
 
     .filter-title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--jc-font-display);
         font-size: 1.5rem;
-        color: white;
+        color: var(--jc-bg);
     }
 
     .filter-subtitle {
         font-size: 0.9rem;
-        color: white;
+        color: var(--jc-bg);
         margin-bottom: 30px;
     }
 
     .filter-box {
         max-width: 380px;
-        background: white;
+        background: var(--jc-bg);
         border-radius: 12px;
         padding: 25px;
         display: flex;
@@ -688,12 +687,12 @@ FILTER SECTION
         flex: 1;
         height: 30px;
         border-radius: 25px;
-        border: 1px solid #ddd;
+        border: 1px solid var(--jc-line-3);
         padding: 0 4px;
     }
 
     .filter-button {
-        background-color: #c5f6a6;
+        background-color: var(--jc-green-100);
         border: none;
         font-weight: 600;
         cursor: pointer;

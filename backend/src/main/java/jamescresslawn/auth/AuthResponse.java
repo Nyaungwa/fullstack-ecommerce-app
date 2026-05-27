@@ -1,5 +1,4 @@
 // ============================================================
-// FILE: auth/AuthResponse.java
 // What we send back after successful login or register
 // ============================================================
 package jamescresslawn.auth;

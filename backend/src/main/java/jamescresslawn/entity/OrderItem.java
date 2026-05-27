@@ -22,18 +22,17 @@ public class OrderItem {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    // We keep a reference to Product for reporting/admin purposes,
-    // but we NEVER use product.price for billing — we use unitPrice below.
+    // a reference to Product for reporting/admin purposes
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    // ─── SNAPSHOT FIELDS ─────────────────────────────────────────────
+    // SNAPSHOT FIELDS 
     // These are copied from the product AT THE TIME OF THE ORDER.
     // They never change, even if the product is later edited or deleted.
 
     @Column(name = "product_name", nullable = false)
-    private String productName;     // e.g. "Regal Sleigh Bed - Queen"
+    private String productName;     
 
     @Column(nullable = false)
     private Integer quantity;
@@ -41,7 +40,6 @@ public class OrderItem {
     @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal unitPrice;   // price per item at time of order
 
-    // ─── Helper method ────────────────────────────────────────────────
     // quantity × unitPrice = this line item's total cost
     public BigDecimal getSubtotal() {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));

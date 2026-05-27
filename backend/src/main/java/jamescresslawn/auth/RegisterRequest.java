@@ -1,6 +1,5 @@
 // ============================================================
-// FILE: auth/RegisterRequest.java
-// What the user sends when signing up
+// What the user sends when registering
 // ============================================================
 package jamescresslawn.auth;
  

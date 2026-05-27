@@ -24,8 +24,6 @@ public class CartItemResponse {
     private int quantity;
     private BigDecimal itemTotal;      // unitPrice × quantity
  
-    // Static factory method - converts a CartItem entity to this response
-    // This keeps the conversion logic in one place
     public static CartItemResponse from(CartItem cartItem) {
         BigDecimal price = cartItem.getProduct().getEffectivePrice();
         return CartItemResponse.builder()

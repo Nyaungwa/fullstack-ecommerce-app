@@ -1,0 +1,95 @@
+/* =============================================================
+   James Cresslawn Luxury Beds — Design Tokens
+   Single source of truth for colors, type, radii, shadows, and
+   spacing. Imported once from main.jsx; every page CSS uses these
+   variables instead of hardcoded values.
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---------- BRAND ---------- */
+  --jc-ink:            #000000;
+  --jc-ink-deep:       #0b1b01;
+  --jc-ink-soft:       #111111;
+  --jc-ink-2:          #1a1a1a;
+  --jc-ink-3:          #222222;
+
+  /* ---------- NEUTRALS ---------- */
+  --jc-bg:             #ffffff;
+  --jc-bg-warm:        #f7f7f4;
+  --jc-bg-cool:        #f5f5f7;
+  --jc-bg-stone:       #f7f7f5;
+  --jc-bg-mute:        #f9fafb;
+  --jc-surface:        #ffffff;
+  --jc-surface-glass:  rgba(255, 255, 255, 0.92);
+  --jc-line:           #e0e0da;
+  --jc-line-2:         #eeeeee;
+  --jc-line-3:         #dddddd;
+  --jc-line-soft:      rgba(17, 17, 17, 0.08);
+
+  /* ---------- TEXT ---------- */
+  --jc-text:           #111111;
+  --jc-text-2:         #444444;
+  --jc-text-3:         #555555;
+  --jc-text-mute:      #777777;
+  --jc-text-faint:     #888888;
+  --jc-text-disabled:  #9a9a9a;
+  --jc-text-on-dark:   rgb(236, 225, 225);
+  --jc-text-on-dark-2: #c8c8c8;
+  --jc-text-on-dark-3: rgba(255, 255, 255, 0.72);
+
+  /* ---------- SIGNATURE GREEN ---------- */
+  --jc-green-50:       #ecfadc;
+  --jc-green-100:      #c5f6a6;
+  --jc-green-200:      #bfe89a;
+  --jc-green-300:      #9bd161;
+  --jc-green-400:      #94d82d;
+  --jc-green-500:      #7cb84e;
+  --jc-green-600:      #3a8a1a;
+  --jc-green-700:      #2e7d32;
+  --jc-green-800:      #2f9e44;
+  --jc-green-900:      #33571a;
+  --jc-green-ink:      #1a3a0a;
+  --jc-green-cta:      linear-gradient(135deg, #c5f6a6 0%, #94d82d 100%);
+  --jc-green-cta-soft: linear-gradient(135deg, #bfe89a 0%, #9bd161 100%);
+
+  /* ---------- SEMANTIC ---------- */
+  --jc-danger:         #d32f2f;
+  --jc-danger-2:       #e03131;
+  --jc-danger-3:       #c92a2a;
+  --jc-success:        var(--jc-green-700);
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --jc-font-display:   'Playfair Display', Georgia, 'Times New Roman', serif;
+  --jc-font-body:      'Manrope', 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* ---------- RADII ---------- */
+  --jc-r-sm:           6px;
+  --jc-r-md:           8px;
+  --jc-r-lg:           12px;
+  --jc-r-xl:           14px;
+  --jc-r-2xl:          18px;
+  --jc-r-3xl:          22px;
+  --jc-r-4xl:          28px;
+  --jc-r-pill:         999px;
+
+  /* ---------- SHADOWS ---------- */
+  --jc-shadow-card:      0 12px 30px rgba(0, 0, 0, 0.15);
+  --jc-shadow-panel:     0 10px 35px rgba(0, 0, 0, 0.05);
+  --jc-shadow-image:     0 15px 40px rgba(0, 0, 0, 0.08);
+  --jc-shadow-modal:     0 20px 60px rgba(0, 0, 0, 0.25);
+  --jc-shadow-auth:      0 22px 60px rgba(0, 0, 0, 0.09);
+  --jc-shadow-cta:       0 12px 24px rgba(124, 184, 78, 0.26);
+  --jc-shadow-cta-hover: 0 16px 28px rgba(124, 184, 78, 0.34);
+
+  /* ---------- SEMANTIC ALIASES ---------- */
+  --jc-header-bg:      var(--jc-ink);
+  --jc-header-fg:      var(--jc-text-on-dark);
+  --jc-footer-bg:      var(--jc-ink-soft);
+  --jc-footer-fg:      var(--jc-text-on-dark-2);
+  --jc-footer-bottom:  var(--jc-text-faint);
+  --jc-cta-bg:         var(--jc-green-100);
+  --jc-cta-bg-grad:    var(--jc-green-cta);
+  --jc-cta-text:       var(--jc-ink-soft);
+}

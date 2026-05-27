@@ -60,11 +60,11 @@ public class Order {
     private Payment payment;
 
     public enum OrderStatus {
-        PENDING, // Order created, waiting for payment
-        PAID, // Payment confirmed via webhook
-        PROCESSING, // You've received and are preparing the order
-        SHIPPED, // On its way (tracking number added)
-        DELIVERED, // Customer received it
-        CANCELLED // Order was cancelled
+        PENDING,
+        PAID, 
+        PROCESSING, 
+        SHIPPED, 
+        DELIVERED, 
+        CANCELLED 
     }
 }

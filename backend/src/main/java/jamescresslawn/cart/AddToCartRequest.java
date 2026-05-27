@@ -1,5 +1,4 @@
 // ============================================================
-// FILE: cart/AddToCartRequest.java
 // What the frontend sends when adding an item to the cart
 // ============================================================
 package jamescresslawn.cart;

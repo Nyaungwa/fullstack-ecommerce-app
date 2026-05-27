@@ -30,25 +30,6 @@ public class PaymentController {
      * The frontend uses this to redirect the user to PayFast.
      *
      * Requires: JWT token (user must be logged in)
-     *
-     * Response:
-     * {
-     *   "paymentUrl": "https://sandbox.payfast.co.za/eng/process",
-     *   "orderId": "uuid",
-     *   "amount": "42998.00",
-     *   "params": {
-     *     "merchant_id": "10000100",
-     *     "merchant_key": "46f0cd694581a",
-     *     "return_url": "http://localhost:5173/payment-success?orderId=...",
-     *     "cancel_url": "http://localhost:5173/payment-cancel?orderId=...",
-     *     "notify_url": "https://abc.ngrok.io/webhooks/payfast",
-     *     "m_payment_id": "uuid",
-     *     "amount": "42998.00",
-     *     "item_name": "James Cresslawn Order #a305a336",
-     *     "email_address": "edwin@test.com",
-     *     "signature": "abc123..."
-     *   }
-     * }
      */
     @PostMapping("/api/payments/payfast/{orderId}")
     public ResponseEntity<?> initiatePayment(@PathVariable String orderId) {
@@ -68,26 +49,14 @@ public class PaymentController {
      * This is the ITN (Instant Transaction Notification) endpoint.
      * PayFast calls this URL directly after a payment is processed.
      *
-     * IMPORTANT NOTES:
-     * 1. This endpoint MUST be publicly accessible (that's what ngrok is for)
+     * NB:
+     * 1. This endpoint MUST be publicly accessible - ngrok
      * 2. This endpoint MUST NOT require authentication (PayFast has no JWT)
      * 3. This MUST return HTTP 200 — PayFast retries failed webhooks
      * 4. Never mark an order as paid from the frontend — only from here
      *
      * PayFast sends form data (not JSON), so we use HttpServletRequest
      * to read all parameters manually.
-     *
-     * Example ITN payload from PayFast:
-     * {
-     *   "m_payment_id": "order-uuid",
-     *   "pf_payment_id": "payfast-transaction-id",
-     *   "payment_status": "COMPLETE",
-     *   "item_name": "James Cresslawn Order #a305a336",
-     *   "amount_gross": "42998.00",
-     *   "amount_fee": "-1234.00",
-     *   "amount_net": "41764.00",
-     *   "signature": "abc123..."
-     * }
      */
     @PostMapping("/webhooks/payfast")
     public ResponseEntity<String> handleItn(HttpServletRequest request) {

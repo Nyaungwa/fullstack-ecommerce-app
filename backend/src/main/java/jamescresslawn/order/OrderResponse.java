@@ -30,8 +30,8 @@ public class OrderResponse {
     private String trackingNumber;   // null until shipped
     private LocalDateTime createdAt;
     private List<OrderItemResponse> items;
-    private int itemCount;           // total quantity across all items
-    private String message;          // e.g. "Order placed successfully"
+    private int itemCount;           
+    private String message;         
 
     public static OrderResponse from(Order order, String message) {
         List<OrderItemResponse> items = order.getOrderItems().stream()

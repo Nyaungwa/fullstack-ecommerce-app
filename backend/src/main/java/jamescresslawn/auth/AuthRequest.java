@@ -1,5 +1,4 @@
 // ============================================================
-// FILE: auth/AuthRequest.java
 // What the user sends when logging in
 // ============================================================
 package jamescresslawn.auth;

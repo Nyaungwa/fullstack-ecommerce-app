@@ -1,0 +1,277 @@
+/* =============================================================
+   VerifyEmailModal — 6-digit OTP popup
+   ============================================================= */
+
+.verify-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 27, 1, 0.55);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: verify-fade-in 0.22s ease-out;
+}
+
+@keyframes verify-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.verify-modal {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    background: var(--jc-surface-glass);
+    border: 1px solid var(--jc-line-soft);
+    border-radius: var(--jc-r-4xl);
+    padding: 40px 36px 32px;
+    box-shadow: var(--jc-shadow-modal);
+    backdrop-filter: blur(8px);
+    text-align: center;
+    animation: verify-pop-in 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: var(--jc-font-body);
+}
+
+@keyframes verify-pop-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.verify-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: var(--jc-text-mute);
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: var(--jc-r-pill);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s, color 0.18s;
+}
+
+.verify-close:hover {
+    background: var(--jc-bg-warm);
+    color: var(--jc-text);
+}
+
+/* ---------- ICON ---------- */
+
+.verify-icon-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--jc-r-pill);
+    background: var(--jc-green-100);
+    color: var(--jc-green-ink);
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+}
+
+/* ---------- COPY ---------- */
+
+.verify-title {
+    font-family: var(--jc-font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--jc-text);
+    margin: 0 0 10px;
+    letter-spacing: -0.005em;
+}
+
+.verify-sub {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--jc-text-3);
+    margin: 0 0 28px;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.verify-sub strong {
+    color: var(--jc-text);
+    font-weight: 700;
+}
+
+/* ---------- OTP INPUT ---------- */
+
+.verify-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.verify-otp {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.verify-otp-input {
+    width: 100%;
+    height: 60px;
+    border: 1.5px solid var(--jc-line-3);
+    background: var(--jc-bg);
+    border-radius: var(--jc-r-xl);
+    text-align: center;
+    font-family: var(--jc-font-body);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--jc-text);
+    outline: none;
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.12s ease;
+    -moz-appearance: textfield;
+}
+
+.verify-otp-input::-webkit-outer-spin-button,
+.verify-otp-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.verify-otp-input.filled {
+    border-color: var(--jc-green-500);
+    background: rgba(197, 246, 166, 0.18);
+}
+
+.verify-otp-input:focus {
+    border-color: var(--jc-green-600);
+    box-shadow: 0 0 0 4px rgba(197, 246, 166, 0.32);
+    transform: translateY(-1px);
+}
+
+/* ---------- ERROR ---------- */
+
+.verify-error {
+    margin: -4px 0 0;
+    color: var(--jc-danger-3);
+    font-size: 0.88rem;
+    text-align: center;
+}
+
+/* ---------- SUBMIT ---------- */
+
+.verify-submit {
+    width: 100%;
+    height: var(--jc-h-cta, 54px);
+    border: none;
+    border-radius: var(--jc-r-pill);
+    background: var(--jc-green-cta-soft);
+    color: var(--jc-text);
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: var(--jc-shadow-cta);
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        filter 0.22s ease;
+}
+
+.verify-submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--jc-shadow-cta-hover);
+    filter: brightness(1.02);
+}
+
+.verify-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* ---------- RESEND / CHANGE EMAIL ---------- */
+
+.verify-resend {
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--jc-text-mute);
+    margin-top: 4px;
+}
+
+.verify-resend strong {
+    color: var(--jc-text);
+    font-weight: 700;
+}
+
+.verify-resend-btn {
+    background: none;
+    border: none;
+    color: var(--jc-green-900);
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    font-family: inherit;
+}
+
+.verify-resend-btn:hover {
+    color: var(--jc-green-600);
+}
+
+.verify-change-email {
+    background: none;
+    border: none;
+    color: var(--jc-text-mute);
+    font-size: 0.88rem;
+    cursor: pointer;
+    padding: 4px;
+    font-family: inherit;
+}
+
+.verify-change-email:hover {
+    color: var(--jc-text);
+    text-decoration: underline;
+}
+
+/* ---------- DEMO HINT ---------- */
+
+.verify-demo-hint {
+    margin: 22px 0 0;
+    font-size: 0.78rem;
+    color: var(--jc-text-faint);
+    font-style: italic;
+    text-align: center;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 480px) {
+    .verify-modal {
+        padding: 32px 22px 24px;
+        border-radius: var(--jc-r-3xl);
+    }
+
+    .verify-title {
+        font-size: 1.5rem;
+    }
+
+    .verify-otp {
+        gap: 6px;
+    }
+
+    .verify-otp-input {
+        height: 52px;
+        font-size: 1.25rem;
+    }
+}
