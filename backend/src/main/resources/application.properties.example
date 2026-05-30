@@ -25,7 +25,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 # JWT CONFIGURATION
 # ==========================================
 jwt.secret=${JWT_SECRET:jc-local-dev-secret-key-min-32-characters-2026!!}
-jwt.expiration=86400000
+jwt.expiration=${JWT_EXPIRATION:86400000}
 
 # ==========================================
 # OPEN-IN-VIEW WARNING FIX
