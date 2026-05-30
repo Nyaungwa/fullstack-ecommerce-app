@@ -10,7 +10,7 @@ server.port=${PORT:8080}
 # ==========================================
 # Railway injects DATABASE_URL as a full JDBC URL
 spring.datasource.url=${DATABASE_URL:jdbc:postgresql://localhost:5432/james_store}
-spring.datasource.username=${DB_USERNAME:Anesu}
+spring.datasource.username=${DB_USERNAME}
 spring.datasource.password=${DB_PASSWORD}
 spring.datasource.driver-class-name=org.postgresql.Driver
 
@@ -24,7 +24,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 # ==========================================
 # JWT CONFIGURATION
 # ==========================================
-jwt.secret=${JWT_SECRET}
+jwt.secret=${JWT_SECRET:jc-local-dev-secret-key-min-32-characters-2026!!}
 jwt.expiration=86400000
 
 # ==========================================
@@ -38,6 +38,26 @@ spring.jpa.open-in-view=false
 logging.level.jamescresslawn=INFO
 
 # ==========================================
+# EMAIL / SMTP
+# ==========================================
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=edwinnyaungwa02@gmail.com
+spring.mail.password=${MAIL_PASSWORD}
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.properties.mail.smtp.ssl.trust=smtp.gmail.com
+spring.mail.properties.mail.smtp.ssl.protocols=TLSv1.2
+
+# ==========================================
+# GOOGLE OAUTH2
+# ==========================================
+spring.security.oauth2.client.registration.google.client-id=${GOOGLE_CLIENT_ID}
+spring.security.oauth2.client.registration.google.client-secret=${GOOGLE_CLIENT_SECRET}
+spring.security.oauth2.client.registration.google.scope=email,profile
+
+# ==========================================
 # CORS
 # ==========================================
 cors.allowed-origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
@@ -45,8 +65,8 @@ cors.allowed-origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localho
 # ==========================================
 # PAYFAST CONFIGURATION
 # ==========================================
-payfast.merchant_id=${PAYFAST_MERCHANT_ID:10045300}
-payfast.merchant_key=${PAYFAST_MERCHANT_KEY:7qiw0fpjlf2l6}
+payfast.merchant_id=${PAYFAST_MERCHANT_ID}
+payfast.merchant_key=${PAYFAST_MERCHANT_KEY}
 payfast.passphrase=${PAYFAST_PASSPHRASE:}
 payfast.sandbox=${PAYFAST_SANDBOX:true}
 payfast.notify-url=${PAYFAST_NOTIFY_URL:https://unimmediately-causable-tobias.ngrok-free.dev/webhooks/payfast}

@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Homepage.css";
 import {
     FaUser,
     FaShoppingCart,
     FaSearch,
-    FaFacebookF,
-    FaInstagram,
     FaTimes
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 function HomePage() {
     const navigate = useNavigate();
@@ -75,10 +74,24 @@ function HomePage() {
         }
     };
 
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userName");
         setUser(null);
+        setDropdownOpen(false);
     };
 
     const handleFilterSearch = () => {
@@ -177,9 +190,26 @@ function HomePage() {
 
                     {/* User */}
                     {user ? (
-                        <div className="icon-items" onClick={handleLogout}>
-                            <FaUser className="icon" />
-                            <span className="icon-text">{user.name.split(" ")[0]}</span>
+                        <div className="user-avatar-wrapper" ref={dropdownRef}>
+                            <div className="icon-items" onClick={() => setDropdownOpen((o) => !o)}>
+                                <UserAvatar name={user.name} />
+                            </div>
+                            {dropdownOpen && (
+                                <div className="user-dropdown">
+                                    <div
+                                        className="user-dropdown-item"
+                                        onClick={() => { setDropdownOpen(false); navigate("/orders"); }}
+                                    >
+                                        My Orders
+                                    </div>
+                                    <div
+                                        className="user-dropdown-item user-dropdown-item--danger"
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <div className="icon-items" onClick={() => navigate("/login")}>
@@ -489,45 +519,7 @@ function HomePage() {
                 })}
             </div>
 
-            {/* ================= PROFESSIONAL FOOTER ================= */}
-
-            <footer className="footer premium-footer">
-                <div className="footer-content">
-                    <div className="footer-column">
-                        <h4>Get In Touch</h4>
-                        <p>Email: support@jamescresslawn.co.za</p>
-                        <p>WhatsApp: 067 956 0000</p>
-                        <p>Phone: 058 588 5000</p>
-                    </div>
-
-                    <div className="footer-column">
-                        <h4>Products</h4>
-                        <p>Beds</p>
-                        <p>Mattresses</p>
-                        <p>Headboards</p>
-                    </div>
-
-                    <div className="footer-column">
-                        <h4>Company</h4>
-                        <p>Terms & Conditions</p>
-                        <p>Privacy Policy</p>
-                        <p>Returns Policy</p>
-                    </div>
-
-                    <div className="footer-column">
-                        <h4>Follow Us</h4>
-
-                        <div className="social-icons">
-                            <FaFacebookF className="icon" />
-                            <FaInstagram className="icon" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="footer-bottom">
-                    © {new Date().getFullYear()} James Cresslawn Luxury Beds. All rights reserved.
-                </div>
-            </footer>
+            <Footer />
 
             {/* ================= AUTH MODAL ================= */}
             {showAuthModal && (
@@ -612,6 +604,36 @@ function HomePage() {
                     </div>
                 </div>
             )}
+        </div>
+    );
+}
+
+/* ── Avatar helpers ─────────────────────────────────────────────────── */
+
+function getInitials(name) {
+    if (!name) return "?";
+    const parts = name.trim().split(" ");
+    const first  = parts[0]?.[0] || "";
+    const second = parts[1]?.[0] || "";
+    return (first + second).toUpperCase();
+}
+
+function UserAvatar({ name }) {
+    return (
+        <div style={{
+            width: "38px",
+            height: "38px",
+            borderRadius: "50%",
+            backgroundColor: "#2d4b11",
+            color: "white",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+        }}>
+            {getInitials(name)}
         </div>
     );
 }

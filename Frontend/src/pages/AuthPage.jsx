@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
 import VerifyEmailModal from "../components/VerifyEmailModal";
+import Footer from "../components/Footer";
 import "./AuthPage.css";
 
 function AuthPage() {
@@ -8,10 +10,6 @@ function AuthPage() {
     const [activeTab, setActiveTab] = useState("signin");
     const [authError, setAuthError] = useState("");
 
-    /* Verification popup state.
-       When non-null, the modal is shown. After the user enters a valid
-       6-digit code, we run `pendingAction` (the deferred login/register
-       network call) and navigate. */
     const [pending, setPending] = useState(null);
 
     const [signInData, setSignInData] = useState({
@@ -42,25 +40,6 @@ function AuthPage() {
         setSignUpData((prev) => ({ ...prev, [name]: value }));
     };
 
-    /* Open the verify-code modal. The real network call is deferred to
-       runAfterVerify so a failed verify doesn't create a half-state. */
-    const requestVerification = (email, runAfterVerify) => {
-        setAuthError("");
-        setPending({ email, runAfterVerify });
-    };
-
-    const handleVerified = async (_code) => {
-        if (!pending) return;
-        try {
-            await pending.runAfterVerify();
-            setPending(null);
-            navigate("/");
-        } catch (err) {
-            setPending(null);
-            setAuthError(err.message || "Something went wrong");
-        }
-    };
-
     /* ----------------------------- API actions ----------------------------- */
 
     const runSignIn = async () => {
@@ -74,7 +53,7 @@ function AuthPage() {
             })
         });
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(data.message || "Invalid email or password");
+        if (!res.ok) throw new Error(data.message || data.error || "Invalid email or password");
         localStorage.setItem("token", data.token);
         localStorage.setItem("userName", data.fullName || signInData.email);
     };
@@ -91,51 +70,97 @@ function AuthPage() {
             })
         });
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(data.message || "Registration failed");
+        if (!res.ok) throw new Error(data.message || data.error || "Registration failed");
         localStorage.setItem("token", data.token);
         localStorage.setItem("userName", data.fullName || signUpData.fullName);
     };
 
     /* ----------------------------- submit handlers ----------------------------- */
 
-    const handleSignInSubmit = (e) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const handleSignInSubmit = async (e) => {
         e.preventDefault();
         setAuthError("");
         if (!signInData.email || !signInData.password) {
             setAuthError("Enter your email and password.");
             return;
         }
-        requestVerification(signInData.email, runSignIn);
+        if (!emailRegex.test(signInData.email)) {
+            setAuthError("Please enter a valid email address.");
+            return;
+        }
+        try {
+            await runSignIn();
+            navigate("/");
+        } catch (err) {
+            setAuthError(err.message || "Something went wrong");
+        }
     };
 
-    const handleSignUpSubmit = (e) => {
+    const handleSignUpSubmit = async (e) => {
         e.preventDefault();
         setAuthError("");
+        if (!signUpData.fullName || !signUpData.email || !signUpData.password || !signUpData.confirmPassword) {
+            setAuthError("Please fill in all fields.");
+            return;
+        }
+        if (!emailRegex.test(signUpData.email)) {
+            setAuthError("Please enter a valid email address.");
+            return;
+        }
         if (signUpData.password !== signUpData.confirmPassword) {
             setAuthError("Passwords do not match.");
             return;
         }
-        if (!signUpData.email || !signUpData.fullName) {
-            setAuthError("Please fill in all fields.");
-            return;
+        try {
+            const apiBase = import.meta.env.VITE_API_URL || "";
+            const res = await fetch(`${apiBase}/api/auth/send-verification`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: signUpData.email })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.message || "Failed to send verification email");
+            setPending({ email: signUpData.email });
+        } catch (err) {
+            setAuthError(err.message || "Failed to send verification email");
         }
-        requestVerification(signUpData.email, runSignUp);
     };
 
-    /* Google OAuth — placeholder. In production, plug in `@react-oauth/google`
-       or your own redirect flow; once Google returns the user object, call
-       requestVerification(googleUser.email, () => storeTokenForGoogleUser()). */
-    const handleGoogle = () => {
-        setAuthError("");
-        const demoEmail =
-            activeTab === "signin" ? (signInData.email || "you@example.com")
-                                   : (signUpData.email || "you@example.com");
-        requestVerification(demoEmail, async () => {
-            // Demo: pretend Google + verify succeeded
-            localStorage.setItem("token", "demo-google-token");
-            localStorage.setItem("userName", "Google user");
-        });
+    const handleVerified = async () => {
+        if (!pending) return;
+        try {
+            await runSignUp();
+            setPending(null);
+            navigate("/");
+        } catch (err) {
+            setPending(null);
+            setAuthError(err.message || "Registration failed");
+        }
     };
+
+    const login = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            setAuthError("");
+            try {
+                const apiBase = import.meta.env.VITE_API_URL || "";
+                const res = await fetch(`${apiBase}/api/auth/google`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ token: tokenResponse.access_token })
+                });
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) throw new Error(data.error || "Google sign-in failed");
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("userName", data.fullName || "");
+                navigate("/");
+            } catch (err) {
+                setAuthError(err.message || "Google sign-in failed. Please try again.");
+            }
+        },
+        onError: () => setAuthError("Google sign-in was cancelled or failed.")
+    });
 
     /* ----------------------------- markup ----------------------------- */
 
@@ -156,19 +181,6 @@ function AuthPage() {
 
             <main className="auth-main">
                 <div className="auth-card">
-
-                    <div className="auth-card-head">
-                        <h1 className="auth-card-title">
-                            {activeTab === "signin"
-                                ? "Welcome back"
-                                : "Create your account"}
-                        </h1>
-                        <p className="auth-card-sub">
-                            {activeTab === "signin"
-                                ? "Sign in to pick up where you left off."
-                                : "Join us for curated luxury sleep."}
-                        </p>
-                    </div>
 
                     <div className="auth-switch" role="tablist">
                         <button
@@ -195,7 +207,7 @@ function AuthPage() {
                     <button
                         type="button"
                         className="auth-google-btn"
-                        onClick={handleGoogle}
+                        onClick={() => login()}
                     >
                         <GoogleG />
                         <span>
@@ -213,7 +225,10 @@ function AuthPage() {
                     </div>
 
                     {activeTab === "signin" ? (
-                        <form className="auth-form" onSubmit={handleSignInSubmit} noValidate>
+                        <form className="auth-form" onSubmit={handleSignInSubmit} noValidate autoComplete="off">
+                            {/* Hidden dummy fields absorb browser autofill before real inputs */}
+                            <input type="text" style={{ display: "none" }} autoComplete="username" tabIndex={-1} aria-hidden="true" />
+                            <input type="password" style={{ display: "none" }} autoComplete="current-password" tabIndex={-1} aria-hidden="true" />
                             <div className="auth-field">
                                 <label htmlFor="signin-email">Email</label>
                                 <input
@@ -223,7 +238,7 @@ function AuthPage() {
                                     placeholder="Enter your email address"
                                     value={signInData.email}
                                     onChange={handleSignInChange}
-                                    autoComplete="email"
+                                    autoComplete="new-password"
                                 />
                             </div>
 
@@ -236,7 +251,7 @@ function AuthPage() {
                                     placeholder="Enter your password"
                                     value={signInData.password}
                                     onChange={handleSignInChange}
-                                    autoComplete="current-password"
+                                    autoComplete="new-password"
                                 />
                             </div>
 
@@ -251,7 +266,7 @@ function AuthPage() {
                                     <span>Remember me</span>
                                 </label>
 
-                                <a href="/" className="auth-link">
+                                <a href="/forgot-password" className="auth-link">
                                     Forgot password?
                                 </a>
                             </div>
@@ -342,42 +357,9 @@ function AuthPage() {
                 </div>
             </main>
 
-            <footer className="auth-footer">
-                <div className="auth-footer-content">
-                    <div className="auth-footer-column">
-                        <h4>James Cresslawn</h4>
-                        <p>
-                            Premium sleep solutions built around comfort, durability,
-                            and refined design.
-                        </p>
-                    </div>
-
-                    <div className="auth-footer-column">
-                        <h4>Customer Care</h4>
-                        <p>Contact Us</p>
-                        <p>Shipping & Delivery</p>
-                        <p>Returns Policy</p>
-                    </div>
-
-                    <div className="auth-footer-column">
-                        <h4>Company</h4>
-                        <p>About Us</p>
-                        <p>Privacy Policy</p>
-                        <p>Terms & Conditions</p>
-                    </div>
-
-                    <div className="auth-footer-column">
-                        <h4>Account</h4>
-                        <p>Sign In</p>
-                        <p>Create Account</p>
-                        <p>Order Support</p>
-                    </div>
-                </div>
-
-                <div className="auth-footer-bottom">
-                    © 2026 James Cresslawn Luxury Beds. All rights reserved.
-                </div>
-            </footer>
+            <div style={{ marginTop: "auto" }}>
+                <Footer />
+            </div>
 
             {pending && (
                 <VerifyEmailModal
@@ -386,12 +368,12 @@ function AuthPage() {
                     onSuccess={handleVerified}
                 />
             )}
+
         </div>
     );
 }
 
-/* Google "G" logo as an inline SVG — keeps the brand colors and avoids
-   adding a new dependency. */
+
 function GoogleG() {
     return (
         <svg

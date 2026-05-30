@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Homepage.css";
 import "./Productpage.css";
 import {
@@ -6,18 +6,46 @@ import {
     FaUser,
     FaShoppingCart,
     FaSearch,
-    FaFacebookF,
-    FaInstagram,
     FaShieldAlt,
     FaUndo
 } from "react-icons/fa";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 function ProductPage() {
 
     const navigate = useNavigate();
     const { state } = useLocation();
     const { id } = useParams();
+
+    /* ================= USER STATE ================= */
+
+    const [user, setUser] = useState(() => {
+        const token = localStorage.getItem("token");
+        const name  = localStorage.getItem("userName");
+        return token ? { name } : null;
+    });
+
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        setUser(null);
+        setDropdownOpen(false);
+        navigate("/");
+    };
 
     /* ================= TOP PANEL LOGIC ================= */
 
@@ -112,10 +140,35 @@ function ProductPage() {
                         <FaSearch className="mobile-icon" />
                     </div>
 
-                    <div className="icon-items">
-                        <FaUser className="icon" />
-                        <span className="icon-text">Login</span>
-                    </div>
+                    {/* User */}
+                    {user ? (
+                        <div className="user-avatar-wrapper" ref={dropdownRef}>
+                            <div className="icon-items" onClick={() => setDropdownOpen((o) => !o)}>
+                                <UserAvatar name={user.name} />
+                            </div>
+                            {dropdownOpen && (
+                                <div className="user-dropdown">
+                                    <div
+                                        className="user-dropdown-item"
+                                        onClick={() => { setDropdownOpen(false); navigate("/orders"); }}
+                                    >
+                                        My Orders
+                                    </div>
+                                    <div
+                                        className="user-dropdown-item user-dropdown-item--danger"
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="icon-items" onClick={() => navigate("/login")}>
+                            <FaUser className="icon" />
+                            <span className="icon-text">Login</span>
+                        </div>
+                    )}
 
                     <div
                         className="icon-items"
@@ -254,55 +307,38 @@ function ProductPage() {
                 </div>
             </div>
 
-            {/* ================= FOOTER ================= */}
+            <Footer />
 
-            <footer className="footer">
+        </div>
+    );
+}
 
-                <div className="footer-container">
+/* ── Avatar helpers ─────────────────────────────────────────────────── */
 
-                    <div className="footer-column">
-                        <h3>James Cresslawn</h3>
-                        <p>
-                            Premium sleep solutions crafted for luxury,
-                            durability, and long-lasting comfort.
-                        </p>
-                    </div>
+function getInitials(name) {
+    if (!name) return "?";
+    const parts = name.trim().split(" ");
+    const first  = parts[0]?.[0] || "";
+    const second = parts[1]?.[0] || "";
+    return (first + second).toUpperCase();
+}
 
-                    <div className="footer-column">
-                        <h4>Customer Care</h4>
-                        <ul>
-                            <li>Contact Us</li>
-                            <li>Shipping & Delivery</li>
-                            <li>Returns Policy</li>
-                            <li>FAQs</li>
-                        </ul>
-                    </div>
-
-                    <div className="footer-column">
-                        <h4>Company</h4>
-                        <ul>
-                            <li>About Us</li>
-                            <li>Careers</li>
-                            <li>Privacy Policy</li>
-                        </ul>
-                    </div>
-
-                    <div className="footer-column">
-                        <h4>Follow Us</h4>
-                        <div className="social-icons">
-                            <FaFacebookF />
-                            <FaInstagram />
-                        </div>
-                    </div>
-
-                </div>
-
-                <div className="footer-bottom">
-                    © {new Date().getFullYear()} James Cresslawn Luxury Beds. All rights reserved.
-                </div>
-
-            </footer>
-
+function UserAvatar({ name }) {
+    return (
+        <div style={{
+            width: "38px",
+            height: "38px",
+            borderRadius: "50%",
+            backgroundColor: "#2d4b11",
+            color: "white",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+        }}>
+            {getInitials(name)}
         </div>
     );
 }

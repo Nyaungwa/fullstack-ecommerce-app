@@ -2,15 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { FaTimes, FaEnvelopeOpenText } from "react-icons/fa";
 import "./VerifyEmailModal.css";
 
-/**
- * VerifyEmailModal
- * --------------------------------------------------------------------
- * 6-digit OTP popup shown after a user submits sign-in / register /
- * Google. Pure visual demo — accepts any 6 digits. To wire to a real
- * backend, call POST /api/auth/verify-code from `handleSubmit` and
- * POST /api/auth/resend-code from `handleResend`.
- * --------------------------------------------------------------------
- */
 export default function VerifyEmailModal({ email, onClose, onSuccess }) {
     const [code, setCode] = useState(["", "", "", "", "", ""]);
     const [error, setError] = useState("");
@@ -18,26 +9,22 @@ export default function VerifyEmailModal({ email, onClose, onSuccess }) {
     const [resendSeconds, setResendSeconds] = useState(30);
     const inputRefs = useRef([]);
 
-    /* ---------- auto-focus first slot ---------- */
     useEffect(() => {
         inputRefs.current[0]?.focus();
     }, []);
 
-    /* ---------- resend countdown ---------- */
     useEffect(() => {
         if (resendSeconds <= 0) return;
         const t = setTimeout(() => setResendSeconds((s) => s - 1), 1000);
         return () => clearTimeout(t);
     }, [resendSeconds]);
 
-    /* ---------- escape to close ---------- */
     useEffect(() => {
         const onKey = (e) => { if (e.key === "Escape") onClose(); };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
     }, [onClose]);
 
-    /* ---------- per-digit handlers ---------- */
     const setDigit = (i, value) => {
         if (!/^\d?$/.test(value)) return;
         const next = [...code];
@@ -57,7 +44,6 @@ export default function VerifyEmailModal({ email, onClose, onSuccess }) {
         }
     };
 
-    /* paste a full code into any box */
     const onPaste = (e) => {
         const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
         if (!pasted) return;
@@ -68,7 +54,6 @@ export default function VerifyEmailModal({ email, onClose, onSuccess }) {
         inputRefs.current[Math.min(pasted.length, 5)]?.focus();
     };
 
-    /* ---------- submit ---------- */
     const handleSubmit = async (e) => {
         e.preventDefault();
         const fullCode = code.join("");
@@ -77,17 +62,39 @@ export default function VerifyEmailModal({ email, onClose, onSuccess }) {
             return;
         }
         setSubmitting(true);
-        // DEMO: any 6-digit code is accepted. Replace with real verify call.
-        await new Promise((r) => setTimeout(r, 500));
-        setSubmitting(false);
-        onSuccess(fullCode);
+        try {
+            const apiBase = import.meta.env.VITE_API_URL || "";
+            const res = await fetch(`${apiBase}/api/auth/verify-code`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, code: fullCode })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                setError(data.message || "Invalid or expired code.");
+                setSubmitting(false);
+                return;
+            }
+            onSuccess(fullCode);
+        } catch {
+            setError("Network error. Please try again.");
+            setSubmitting(false);
+        }
     };
 
-    /* ---------- resend ---------- */
-    const handleResend = () => {
+    const handleResend = async () => {
         if (resendSeconds > 0) return;
         setResendSeconds(30);
-        // POST /api/auth/resend-code here
+        try {
+            const apiBase = import.meta.env.VITE_API_URL || "";
+            await fetch(`${apiBase}/api/auth/send-verification`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email })
+            });
+        } catch {
+            // ignore resend errors silently
+        }
     };
 
     return (
@@ -171,10 +178,6 @@ export default function VerifyEmailModal({ email, onClose, onSuccess }) {
                         Use a different email
                     </button>
                 </form>
-
-                <p className="verify-demo-hint">
-                    Demo: any 6-digit code is accepted.
-                </p>
             </div>
         </div>
     );

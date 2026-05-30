@@ -46,6 +46,18 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
+		<!-- Spring Mail: sends welcome emails via SMTP -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!-- OAuth2 Client: Google Sign-In support -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+
 		<!-- Validation: @NotNull, @Email, @NotBlank etc -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
